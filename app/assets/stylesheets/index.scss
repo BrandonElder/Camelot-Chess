@@ -21,7 +21,6 @@ body {
 }
 
 /* HERO SECTION */
-
 .hero {
   background: linear-gradient(to bottom, rgba(13, 175, 129, 0.1) 0%, rgba(13, 175, 129, 0.1) 100%), url('chess7.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
@@ -60,24 +59,20 @@ h4.hero-subtext {
 }
 
 /* ABOUT SECTION */
-
 .about-section {
-  height: 480px;
-  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 460px;
+  width: 100%;
   margin: 0;
-  text-align: center;
   color: black;
   clear: both;
-  display: table-cell;
-  vertical-align: middle;
 }
 
 .about-container {
-  display: inline-block;
+  text-align: center;
   width: 40%;
-  margin: 0 auto;
-  float: none;
-  text-align: left;
 }
 
 .about-header {
@@ -101,32 +96,26 @@ h4.hero-subtext {
 }
 
 /* SKILLS SECTION */
-
 .skills-section {
-  height: 400px;
-  width: 80%;
-  border-radius: 12px;
-  margin: 0 auto 100px;
+  height: 800px;
+  background: darkslategray;
+  color: white;
+  width: 100%;
+  margin: 0 auto;
   text-align: center;
-  border: 4px solid #38CF9C;
-  color: black;
-  clear: both;
+  padding-top: 80px;
 }
 
 .skills-container {
-  display: block;
-  width: 100%;
-  margin: 0 auto;
-  float: none;
-  padding-top: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .skills-title {
   font-family: 'Montserrat', sans-serif;
   font-size: 44px;
   font-weight: 400;
-  padding-bottom: 8px;
-  padding-top: 56px;
   margin: 0;
 }
 
@@ -137,8 +126,14 @@ h4.hero-subtext {
   margin: 0;
 }
 
+.skillbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .skills {
-  display: inline-block;
+  display: block;
   height: auto;
   width: auto;
   margin: 20px;
@@ -146,6 +141,7 @@ h4.hero-subtext {
 }
 
 .skills h3 {
+  text-align: center;
   padding-top: 10px;
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
@@ -156,202 +152,34 @@ h4.hero-subtext {
   width: 90px;
 }
 
-/* CODE SECTION */
-/*
-.code-section {
-  height: 880px;
-  width: 100%;
-  margin: 20px auto 40px auto;
-  text-align: center;
-  color: black;
-  clear: both;
-}
-
-.code-container {
-  height: 800px;
-  width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  color: black;
-  padding-top: 12px;
-}
-
-.snippet {
-  display: inline-block;
+.skills-hr {
   width: 40%;
-  height: 40%;
-  margin: 20px;
-  background-color: rgba(0,0,0,0.25);
-  border: 1px solid rgba(0,0,0,0.45);
-  border-radius: 65px;
-}
-
-.code-header {
-  width: 100%;
-  margin: 0;
-  padding-top: 24px;
-}
-
-.code-title {
-  margin: 0;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 44px;
-  font-weight: 400;
-  padding-bottom: 8px;
-  padding-top: 16px;
-}
-
-.code-subtitle {
-  font-family: 'Roboto', sans-serif;
-  font-weight: 100;
-  font-size: 16px;
-  margin: 0;
-}
-
-.code1 {
-  @include span-columns(6);
-  height: 600px;
-  width: 50%;
-  margin: 0;
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.1);
-  color: #fff;
-}
-
-.code1:nth-child(even) {
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.9);
-}
-
-.code2 {
-  @include span-columns(6);
-  height: 600px;
-  width: 50%;
-  margin: 0;
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.9);
-  color: #fff;
-}
-
-.code2:nth-child(even) {
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-.code p {
-  padding: 12px;
-}
-
-.arrow-left {
-  width: 0; 
-  height: 0; 
-  border-bottom: 50px solid transparent;
-  border-top: 50px solid transparent;
-  border-left: 50px solid rgba(0, 0, 0, 0.8);
-  font-size: 0;
-  line-height: 0;
-  margin-top: 275px;
-}
-
-.arrow-right {
-  width: 100%; 
-  height: 0; 
-  border-bottom: 50px solid transparent;
-  border-top: 50px solid transparent;
-  border-right: 50px solid rgba(0, 0, 0, 0.8);
-  font-size: 0;
-  line-height: 0;
-  margin-top: 275px;
-}
-*/
-
-/* TOOLS SECTION */
-
-.tools-section {
-  height: 400px;
-  width: 80%;
-  border-radius: 12px;
-  margin: 0 auto 100px;
-  text-align: center;
-  border: 4px solid #38CF9C;
-  color: black;
-  clear: both;
-}
-
-.tools-container {
-  display: block;
-  width: 100%;
-  margin: 0 auto;
-  float: none;
-  padding-top: 12px;
-}
-
-.tools-title {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 42px;
-  font-weight: 400;
-  padding-bottom: 8px;
-  padding-top: 56px;
-  margin: 0;
-}
-
-.tools-subtitle {
-  font-family: 'Roboto', sans-serif;
-  font-weight: 100;
-  font-size: 16px;
-  margin: 0;
-}
-
-.tools {
-  display: inline-block;
-  height: auto;
-  width: auto;
-  margin: 20px;
-  padding-top: 20px;
-}
-
-.tools h3 {
-  padding-top: 4px;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
-}
-
-.tools-logos {
-  height: 90px;
-  width: 90px;
-
-  @media all and (max-width: 64em) {
-    height: 80px;
-    width: 80px
-  }
+  margin: 50px auto;
 }
 
 /* TEAM SECTION */
-
 .team-section {
-  height: 440px;
+  height: 400px;
   width: 80%;
-  border-radius: 12px;
-  margin: 0 auto 40px;
+  margin: 50px auto;
   text-align: center;
-  background-color: rgba(0,0,0,0.5);
-  border: 2px solid rgba(0,0,0,0.55);
-  color: #fff;
+  border: 1px solid darkslategrey;
+  border-radius: 8px;
+  padding-top:  50px;
 }
 
 .team-container {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   margin: 0 auto;
-  float: none;
 }
 
 .team-title {
   font-family: 'Montserrat', sans-serif;
   font-size: 42px;
   font-weight: 400;
-  padding-bottom: 8px;
-  padding-top: 56px;
   margin: 0;
 }
 
@@ -362,8 +190,14 @@ h4.hero-subtext {
   margin: 0;
 }
 
+.teambox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .team {
-  display: inline-block;
+  display: block;
   height: auto;
   width: auto;
   margin: 20px;
@@ -371,6 +205,7 @@ h4.hero-subtext {
 }
 
 .team h3 {
+  text-align: center;
   padding-top: 8px;
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
