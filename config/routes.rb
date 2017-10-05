@@ -8,4 +8,5 @@ Rails.application.routes.draw do
     resources :pieces, only: [:show, :update]
   end
   resources :users, only: :show
+  resources :messages
 end
