@@ -7,5 +7,6 @@ class User < ApplicationRecord
 
   has_many :games
   has_many :pieces
+  has_many :messages
 
 end
