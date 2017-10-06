@@ -9,6 +9,8 @@ class GamesController < ApplicationController
   end
 
   def show
+    @messages = Message.for_display
+    @message  = current_user.messages.build
     @game = Game.find(params[:id])
     @pieces = @game.pieces
     @black_player = @game.black_user_id
