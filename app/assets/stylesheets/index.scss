@@ -27,11 +27,19 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  height: 660px;
-  box-shadow: 0px 3px 8px #2a2a2a;
+  height: 100vh;
+  /*box-shadow: 0px 3px 8px #2a2a2a;*/
   text-align: center;
   margin-top: -70px;
   line-height: 30px;
+
+  @media all and (max-width: 1300px) {
+    height: 50vh;
+  }
+}
+
+.hero.active {
+  margin-top: -400px;
 }
 
 h1.hero-text {
@@ -56,6 +64,23 @@ h4.hero-subtext {
 .play {
   padding-top: 1.6em;
   animation: fade-in 3.5s;
+  padding-left: 0;
+}
+
+.arrows {
+  text-align: center;
+  max-width: 100%;
+  height: auto;
+}
+
+.arrow-div {
+  height: 10%;
+  width: 7%;
+  margin: 50px auto;
+}
+
+#main-container {
+ 
 }
 
 /* ABOUT SECTION */
@@ -157,14 +182,17 @@ h4.hero-subtext {
   margin: 50px auto;
 }
 
+.team-text {
+  text-align: center;
+}
+
+
 /* TEAM SECTION */
 .team-section {
   height: 400px;
-  width: 80%;
+  width: 100%;
   margin: 50px auto;
   text-align: center;
-  border: 1px solid darkslategrey;
-  border-radius: 8px;
   padding-top:  50px;
 }
 
@@ -174,6 +202,7 @@ h4.hero-subtext {
   align-items: center;
   width: 100%;
   margin: 0 auto;
+  padding-top: 20px;
 }
 
 .team-title {
@@ -191,20 +220,11 @@ h4.hero-subtext {
 }
 
 .teambox {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: 12px;
 }
 
-.team {
-  display: block;
-  height: auto;
-  width: auto;
-  margin: 20px;
-  padding-top: 20px;
-}
 
-.team h3 {
+.teambox h3 {
   text-align: center;
   padding-top: 8px;
   font-family: 'Montserrat', sans-serif;
