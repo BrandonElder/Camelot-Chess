@@ -1,5 +1,5 @@
 <header class="navigation" role="banner">
-  <div class="navigation-wrapper <%= @clear_navbar? + 'clear' : 'dark' %>">
+  <div class="navigation-wrapper <%= @clear_navbar? + 'clear' : @blue_navbar? + 'dark' : 'dark' %>">
     <span class="navigation-menu-button" id="js-mobile-menu">
       <div class="burger-toggle">
         <span class="bar-top"></span>
