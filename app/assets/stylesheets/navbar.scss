@@ -13,7 +13,7 @@ header.navigation {
   $navigation-active-link-color: transparentize(white, 0.5);
   $horizontal-bar-mode: $large-screen;
 
-  background-color: darkslategrey;
+  background-color: rgba(0,0,0,0.06);
   min-height: $navigation-height;
   width: 100%;
   z-index: 999;
@@ -22,7 +22,11 @@ header.navigation {
     @include clearfix;
     position: relative;
     z-index: 9999;
-    background-color: rgba(0,0,0,0.75);
+    background-color: darkslategrey;
+  }
+
+  .navigation-wrapper.dark {
+    background-color: darkslategrey;
   }
 
   .navigation-wrapper.clear {
@@ -31,8 +35,6 @@ header.navigation {
 
   .navigation-wrapper.active {
     background-color: darkslategrey;
-    height: 470px;
-    margin-bottom: 25%;
   }
 
   .logo {
@@ -89,6 +91,7 @@ header.navigation {
     overflow: visible;
     padding-left: 80px;
     padding-right: 50px;
+    padding-bottom: 50px;
     width: 100%;
     z-index: 9999;
 

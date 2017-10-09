@@ -23,6 +23,7 @@ class GamesController < ApplicationController
 
   def index
     @games = Game.available
+    @blue_navbar = true
   end
 
   def create
