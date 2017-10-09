@@ -9,4 +9,7 @@ Rails.application.routes.draw do
   end
   resources :users, only: :show
   resources :messages
+  
+
+  mount ActionCable.server, at: '/cable'
 end

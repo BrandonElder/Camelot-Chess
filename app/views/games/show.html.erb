@@ -1,11 +1,9 @@
+<h2 class="game-title"><%= @game.name %></h2>
 <div class="game-board-container">
-  <h2 class="game-title"><%= @game.name %></h2>
-
   <table class="game-board">
     <% 7.downto(0) do |row| %>
       <tr>
         <% 0.upto(7) do |col| %>
-
           <td class="piece-square ui-droppable" data-x="<%= col %>" data-y="<%= row %>">
             <% @pieces.each do |piece| %>
               <% if piece.x_position == col && piece.y_position == row %>
@@ -19,4 +17,11 @@
       </tr>
     <% end %>
   </table>
+  
+  <div class="chat-room">
+    <div class="message-wr">
+      <%= render 'messages/messages' %>
+      <%= render 'messages/message_form' %>
+    </div>
+  </div>
 </div>

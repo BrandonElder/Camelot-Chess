@@ -10,21 +10,16 @@ App.room = App.cable.subscriptions.create "RoomChannel",
       $('#messages-table').append data.message
       scroll_bottom()
 
+submit_message = () ->
+  $('#message_content').on 'keydown', (event) ->
+    if event.keyCode is 13 && !event.shiftKey
+      $('input').click()
+      event.target.value = ""
+      event.preventDefault()
 
 $(document).on 'turbolinks:load', ->
   submit_message()
   scroll_bottom()
 
-submit_message = () ->
-  $('#message_content').on 'keydown', (event) ->
-    if event.keyCode is 13
-      $('input').click()
-      event.target.value = ""
-      event.preventDefault()
-
 scroll_bottom = () ->
-  $("#messages").animate({
-    scrollTop: $("#messages")[0].scrollHeight}, -500)
-    
-
-
+  $('#messages').scrollTop($('#messages')[0].scrollHeight)
