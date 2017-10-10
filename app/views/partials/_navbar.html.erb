@@ -9,7 +9,7 @@
     </span>
     <nav role="navigation">
       <ul id="js-navigation-menu" class="navigation-menu">
-      <li class="nav-link left"><%= link_to 'Home', root_path %></li>
+      <li class="nav-link left"><%= link_to 'Home', root_path, class: "home-link" %></li>
         <% if user_signed_in? %>
         <li class="nav-link"><%= link_to 'My Profile', user_path(current_user) %></li>
         <li class="nav-link"><%= link_to 'Create Game', new_game_path %></li>

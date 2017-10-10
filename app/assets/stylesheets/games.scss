@@ -27,3 +27,8 @@
     padding: 8px;
   }
 }
+
+body.games {
+  background-color: rgba(0,0,0,0.13);
+  transition: background-color 1.0s ease;
+}
