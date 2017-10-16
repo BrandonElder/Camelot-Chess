@@ -3,16 +3,10 @@ require 'pry'
 class Game < ApplicationRecord
   belongs_to :white_user, class_name: 'User'
   belongs_to :black_user, class_name: 'User', optional: true
-
   has_many :pieces
-
   after_create :fill_board, :first_turn!
-
   scope :available, -> { where(black_user_id: nil) }
-  
-  def available?
-    black_user.blank?
-  end
+
 
   def first_turn!
     update(user_turn: 'WHITE')
@@ -136,7 +130,9 @@ class Game < ApplicationRecord
   end
 
   def available?
-    black_user.blank?
+    if user_signed_in?
+     Game.where(black_user_id: nil) && Game.where(white_user_id != current_user).to_i
+   end
   end
 
   def black_pieces

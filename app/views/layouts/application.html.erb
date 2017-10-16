@@ -3,15 +3,19 @@
   <head>
     <title>Camelotchess</title>
     <%= csrf_meta_tags %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700,800|Roboto:300,400,500,700" rel="stylesheet">
   </head>
-  
   <body>
-  <%= render 'partials/navbar' %>
+    <%= render 'partials/navbar' %>
+    <% flash.each do |key, value| %>
+      <div class="alert alert-<%= key %> alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <%= value %>
+      </div>
+    <% end %>  
     <%= yield %>
-  <%= render 'partials/footer' %>
+    <%= render 'partials/footer' %>
   </body>
 </html>
