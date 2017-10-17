@@ -1,35 +1,5 @@
 /* CARDS */
 
-$small-font-size: 0.75em;
-
-$badges: (
-  "alert": #fff6bf,
-  "default": #08D4D0,
-  "error": #fbe3e4,
-  "notice": #e5edf8,
-  "success": #3DE398,
-) !default;
-
-@each $badge-type, $color in $badges {
-  .badge-#{$badge-type} {
-    border-radius: $small-font-size * 5;
-    color: white;
-    display: inline-block;
-    font-size: $small-font-size;
-    line-height: 1;
-    padding: 0.4em 1.2em;
-  }
-}
-
-.badge-default {
-  border-radius: 0.4em;
-  color: white;
-  display: inline-block;
-  font-size: 0.85em;
-  line-height: 1;
-  padding: 1.0em 1.0em;
-}
-
 .cards {
   display: flex;
   flex-wrap: wrap;
@@ -49,39 +19,20 @@ $badges: (
   $card-background: #E6F1F5;
   $card-header-background: $card-background;
   $card-margin: 1em;
-  $card-image-hover-opacity: 0.7;
-  $card-image-hover-color: #F8F2B4;
-
   font-family: 'Montserrat', sans-serif;
   font-weight: 200;
-  color: #fff;
-  background-color: rgba(0,0,0,0.8);
+  background-color: #fff;
+  color: black;
   border-radius: 10px;
   flex-basis: 15em;
   flex-grow: 1;
   cursor: pointer;
   margin: 0 $card-margin $base-spacing $card-margin;
   position: relative;
-  transition: all 0.2s ease-in-out;
-
-  .card-image {
-    background-color: $card-image-hover-color;
-    height: 150px;
-    max-height: 150px;
-    overflow: hidden;
-
-    img {
-      @include border-top-radius($base-border-radius);
-      opacity: 1;
-      transition: all 0.2s ease-in-out;
-      width: 100%;
-    }
-  }
 
   .card-header {
     line-height: 1.5em;
     padding: 1.0em 1.5em 0em 1.5em;
-    transition: all 0.2s ease-in-out;
     h3 {
       font-family: 'Montserrat', sans-serif;
       font-weight: 400;
@@ -94,26 +45,14 @@ $badges: (
     line-height: 1.5em;
     padding: ($base-spacing / 2) ($base-spacing / 2);
     margin-bottom: 0.6em;
-
-    p {
-      margin: 0 0 ($base-spacing / 2);
-    }
   }
+}
 
-  &:focus,
-  &:hover {
-    cursor: pointer;
-
-    img {
-      opacity: $card-image-hover-opacity;
-    }
-  }
-
-  &:active {
-    background-color: $card-background;
-
-    .card-header {
-      background-color: $card-background;
-    }
-  }
+.badge-default {
+  border-radius: 0.4em;
+  color: black;
+  display: inline-block;
+  font-size: 0.85em;
+  line-height: 1;
+  padding: 1.0em 1.0em;
 }

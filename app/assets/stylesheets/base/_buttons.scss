@@ -18,6 +18,7 @@
   user-select: none;
   vertical-align: middle;
   white-space: nowrap;
+  outline: none;
 
   &:hover,
   &:focus {
@@ -35,25 +36,40 @@
   }
 }
 
+.btn.btn-success.card-btn {
+  background-color: transparent;
+  border: 2px solid #1565c0;
+  border-radius: 10px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  color: black;
+
+  &:hover,
+  &:focus {
+    background-color: #1565c0;
+    border: 2px solid #1565c0;
+  }
+}
+
+.forfeit-btn {
+  border: 2px solid #FF4769;
+  border-radius: 10px;
+  color: black;
+  
+  &:hover,
+  &:focus {
+    background-color: shade(#FF4769, 30%);
+    border-color: shade(#FF4769, 30%);
+    color: #fff;
+  }
+}
+
 /*.play-btn {
-  appearance: none;
   border: 2px solid #fff;
   border-radius: 20px;
-  color: #fff;
-  cursor: pointer;
-  display: inline-block;
   font-family: 'Montserrat', sans-serif;
   font-weight: 300;
-  font-size: $base-font-size;
-  -webkit-font-smoothing: antialiased;
   font-weight: 600;
-  line-height: 1;
-  padding: $small-spacing $base-spacing;
-  text-decoration: none;
-  transition: background-color $base-duration $base-timing;
-  user-select: none;
-  vertical-align: middle;
-  white-space: nowrap;
 
   &:hover,
   &:focus,
@@ -62,96 +78,12 @@
     border-color: shade(#fff, 20%);
     color: #fff;
   }
-
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-
-    &:hover {
-      background-color: $action-color;
-    }
-  }
 } */
 
-.forfeit-btn {
-  appearance: none;
-  border: 2px solid #FF4769;
-  border-radius: 10px;
-  color: black;
-  cursor: pointer;
-  display: inline-block;
-  font-family: $base-font-family;
-  font-size: $base-font-size;
-  -webkit-font-smoothing: antialiased;
-  font-weight: 600;
-  line-height: 1;
-  padding: $small-spacing $base-spacing;
-  text-decoration: none;
-  transition: background-color $base-duration $base-timing;
-  user-select: none;
-  vertical-align: middle;
-  white-space: nowrap;
-  outline: none;
-
-  &:hover,
-  &:focus {
-    background-color: shade(#FF4769, 30%);
-    border-color: shade(#FF4769, 30%);
-    color: #fff;
-  }
-
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-
-    &:hover {
-      background-color: $action-color;
-    }
-  }
-}
 
 /* This will change once we are sure about a wireframe for the game/show page */
 .buttons {
   padding-left: 20px;
-}
-
-.btn.btn-success.card-btn {
-  background-color: transparent;
-  border: 2px solid #1565c0;
-  border-radius: 10px;
-  color: #fff;
-  cursor: pointer;
-  display: inline-block;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1em;
-  -webkit-font-smoothing: antialiased;
-  font-weight: 400;
-  line-height: 1;
-  padding: 0.75em 1.5em;
-  text-align: center;
-  text-decoration: none;
-  transition: background-color 150ms ease;
-  user-select: none;
-  vertical-align: middle;
-  white-space: nowrap;
-  outline: none;
-
-  &:hover,
-  &:focus {
-    background-color: #1565c0;
-    border: 2px solid #1565c0;
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-
-    &:hover {
-      background-color: #1565c0;
-    }
-  }
 }
 
 form.button_to {
