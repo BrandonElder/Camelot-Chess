@@ -35,12 +35,12 @@ class GamesController < ApplicationController
 
   def join
     @game = Game.find(params[:id])
-    if current_user.id = @game.white_user_id
-      flash[:error] = "You can't join your own game"
-      redirect_to games_path
-    else
+    if @game.black_user.nil? && current_user != @game.white_user
       @game.update_attributes(black_user_id: current_user.id)
       redirect_to game_path(@game)
+    else
+      flash[:alert] = "I'm sorry. This game is full or you are already a player."
+      redirect_to games_path
     end
   end
 
