@@ -27,7 +27,7 @@
                     <span class="badge-default"> Your opponent is: <%= my_game.white_user.username %> <br /></span>
                   <% end %>
                   <span class="badge-default"> Created on: <%= my_game.created_at.strftime("%m/%d/%Y") %> <br /></span>
-                  <%= button_to 'Play Game', game_path(my_game), :class=> 'btn btn-success card-btn', :method => :get %>
+                  <%= button_to 'Resume Game', game_path(my_game), :class=> 'btn btn-success card-btn', :method => :get %>
                 </div>
               </div>
             <% end %>
