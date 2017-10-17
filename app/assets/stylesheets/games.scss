@@ -1,5 +1,25 @@
 /* AVAILABLE GAMES */
 
+.alert.alert-success.alert-dismissible,
+.alert.alert-error.alert-dismissible,
+.alert.alert-alert.alert-dismissible {
+  margin: 20px auto;
+  width: 100%;
+  text-align: center;
+  background-color: indianred;
+  color: white;
+}
+
+button.close {
+  background-color: indianred;
+  box-shadow: none;
+
+  &:focus,
+  &:hover {
+   background-color: indianred;
+  }
+}
+
 .available-games-section {
   margin: 60px auto 40px auto;
   width: 60%;

@@ -35,13 +35,11 @@ class GamesController < ApplicationController
 
   def join
     @game = Game.find(params[:id])
-    if @game.available?
-      @game.black_user = current_user
-      assign_black_pieces_to_current_user
-      @game.save
+    if @game.black_user.nil? && current_user != @game.white_user
+      @game.update_attributes(black_user_id: current_user.id)
       redirect_to game_path(@game)
     else
-      #render :text, :status => :unprocessable_entity
+      flash[:alert] = "I'm sorry. This game is full or you are already a player."
       redirect_to games_path
     end
   end
@@ -63,6 +61,13 @@ class GamesController < ApplicationController
   def assign_black_pieces_to_current_user
     @game.black_pieces.each do |piece|
       piece.color = 'BLACK'
+      piece.save
+    end
+  end
+
+  def assign_white_pieces_to_current_user
+    @game.white_pieces.each do |piece|
+      piece.color = 'WHITE'
       piece.save
     end
   end

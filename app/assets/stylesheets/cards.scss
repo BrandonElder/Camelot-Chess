@@ -54,6 +54,7 @@ $badges: (
 
   font-family: 'Montserrat', sans-serif;
   font-weight: 200;
+  color: #fff;
   background-color: rgba(0,0,0,0.8);
   border-radius: 10px;
   flex-basis: 15em;
@@ -78,7 +79,6 @@ $badges: (
   }
 
   .card-header {
-    color: #fff;
     line-height: 1.5em;
     padding: 1.0em 1.5em 0em 1.5em;
     transition: all 0.2s ease-in-out;

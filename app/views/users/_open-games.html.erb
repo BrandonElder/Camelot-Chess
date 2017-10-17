@@ -1,0 +1,23 @@
+<div class="open-games-section">
+  <div class="my-games-title">
+    <h1>My Open Games</h1>
+  </div>
+  <div class="cards">
+    <% if user_signed_in? %>
+      <% if @open_games.present? %>
+        <% @open_games.each do |my_game| %>
+          <div class="card">
+            <div class="card-header">
+              <h3> Game: <%= my_game.name %></h3>
+            </div>
+            <div class="card-copy">
+              <p class="game-users"> Waiting on opponent... <br /></p>
+              <p class="game-date"> Created on: <%= my_game.created_at.strftime("%m/%d/%Y") %> <br /></p>
+              <%= button_to 'Join game', join_game_path(my_game), { class: 'btn btn-success card-btn', action: :join, method: :patch } %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

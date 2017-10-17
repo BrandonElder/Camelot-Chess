@@ -1,0 +1,26 @@
+<div class="my-games-section">
+  <div class="my-games-title">
+    <h1>My Current Games</h1>
+  </div>
+  <div class="cards">
+    <% if user_signed_in? %>
+      <% if @joined_games.present? %>
+        <% @joined_games.each do |my_game| %>
+          <div class="card">
+            <div class="card-header">
+              <h3> Game: <%= my_game.name %></h3>
+            </div>
+            <div class="card-copy">
+              <p class='game-users'>
+              <%= my_game.white_user.username %>
+              vs.
+              <%= my_game.black_user.username %></p>
+              <p class='game-date'>Created on: <%= my_game.created_at.strftime("%m/%d/%Y") %></p>
+              <%= button_to 'Play Game', game_path(my_game), :class => 'btn btn-success card-btn', :method => :get %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
