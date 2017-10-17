@@ -9,11 +9,7 @@
   </head>
   <body>
     <%= render 'layouts/navbar' %>
-    <% flash.each do |key, value| %>
-      <div class="alert alert-<%= key %> alert-dismissible">
-        <%= value %>
-      </div>
-    <% end %>  
+    <%= render 'layouts/flash' %>  
     <%= yield %>
     <%= render 'layouts/footer' %>
   </body>

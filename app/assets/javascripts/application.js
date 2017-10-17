@@ -16,6 +16,8 @@
 //= require jquery-ui
 //= require_tree .
 
+
+/* global $ */
 $(document).ready(function () {
   $(".alert").fadeOut(5000);
 });
