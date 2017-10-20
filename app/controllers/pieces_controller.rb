@@ -7,6 +7,7 @@ class PiecesController < ApplicationController
   end
 
   def update
+    game = current_piece.game
     @piece = Piece.find_by_id(params[:id])
       if @piece.color != @piece.game.user_turn
         render text: "It is the other player's turn"
@@ -15,8 +16,16 @@ class PiecesController < ApplicationController
       else
         render text: "Valid Move"
       end
-    
   end
+  
+  def current_game
+    @game ||= current_piece.game
+  end
+
+  def current_piece
+    @piece ||= Piece.find(params[:id])
+  end
+
 
   private
 

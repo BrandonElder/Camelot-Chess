@@ -8,6 +8,10 @@ class Game < ApplicationRecord
   scope :available, -> { where(black_user_id: nil) }
 
 
+  def find_piece(x_position, y_position)
+    pieces.find_by(x_position: x_position, y_position: y_position)
+  end
+
   def first_turn!
     update(user_turn: 'WHITE')
   end

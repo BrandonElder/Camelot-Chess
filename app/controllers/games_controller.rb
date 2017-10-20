@@ -13,6 +13,8 @@ class GamesController < ApplicationController
     @message  = current_user.messages.build
     @game = Game.find(params[:id])
     @pieces = @game.pieces
+    #@pieces = current_game.pieces.order(:y_position).order(:x_position).to_a
+
     @black_player = @game.black_user_id
     @white_player = @game.white_user_id
   end

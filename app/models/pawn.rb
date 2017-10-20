@@ -2,12 +2,7 @@ class Pawn < Piece
 
   def valid_move?(x, y)
     if super(x, y)
-      if is_capture?(x, y)
-        capture_piece_at!(x, y)
-        change_location(x, y)
-      elsif promotable?(x, y)
-        change_location(x, y)
-        promote!(x, y)
+      if is_capture?(x, y) || promotable?(x, y)
       else
         return (one_square?(x, y) || two_squares?(x, y))
       end
@@ -24,12 +19,12 @@ class Pawn < Piece
     last_piece_moved.en_passant_y == y && last_piece_moved.en_passant_x == x_position
   end 
 
-  def move_to!(x, y)
-    return unless color == game.user_turn
-    update_en_passant_position(x, y) 
-    capture_passant(x, y) #if valid_en_passant?(x, y)
-    super
-  end 
+ # def move_to!(x, y)
+  #  return unless color == game.user_turn
+   # update_en_passant_position(x, y) 
+   # capture_passant(x, y) #if valid_en_passant?(x, y)
+    #super
+  #end 
 
   def capture_passant(x, y)
     capture_piece_at!(last_piece_moved.x_position, last_piece_moved.y_position) if valid_en_passant?(x, y)
@@ -61,7 +56,6 @@ class Pawn < Piece
 
   # checks to see if a pawn is promotable.
   def promotable?(x, y)
-    x
     return true if y == 7 && color == "WHITE" || y == 0 && color == "BLACK"
     false
   end
