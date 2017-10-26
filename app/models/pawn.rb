@@ -1,15 +1,68 @@
 class Pawn < Piece
 
+ # def move_to!(x, y)
+  #  return unless color == game.user_turn
+   # update_en_passant_position(x, y) 
+   # capture_passant(x, y) #if valid_en_passant?(x, y)
+    #super
+  #end 
+
+
+  # def is_capture?(x, y)
+  #  game.space_occupied?(x, y) && ((y - y_position).abs == 1 && (x - x_position).abs == 1)
+  # end
+  
+  def move_to!(x, y)
+    super
+  end
+ 
+  
   def valid_move?(x, y)
-    if super(x, y)
-      if is_capture?(x, y) || promotable?(x, y)
-      else
-        return (one_square?(x, y) || two_squares?(x, y))
-      end
-    end
-    false
+    super && pawn_possible?(x, y)
+  end
+  
+  def pawn_possible?(x, y)
+    (one_square?(x, y) && vertical_move?(x, y)) || (two_squares?(x, y) && vertical_move?(x, y)) ||
+    valid_capture?(x, y)
+  end
+  
+  def one_square?(x, y)
+    unoccupied?(x, y) && (x - x_position).abs == 0 && (y - y_position).abs == 1
   end
 
+  def two_squares?(x, y)
+    unoccupied?(x, y) && in_starting_position? && ((x - x_position). abs == 0 && (y - y_position).abs == 2)
+  end
+  
+  def valid_capture?(x, y)
+    super
+  end
+  
+  def forward_move?(y)
+    (y - y_position) < 0 && color == 'black' ||
+    (y - y_position) > 0 && color == 'white'
+  end
+  
+  def diagonal_move?(x, y)
+    (y_position - y).abs == (x_position - x).abs
+  end
+
+  def vertical_move?(x, y)
+    x_position == x && y_position != y
+  end
+
+  def horizontal_move?(x, y)
+    (y_position == y) && (x_position != x) ? true : false
+  end
+  
+  def opponent(x, y)
+    game.find_piece(x, y)
+  end
+  
+  def occupied?(x, y)
+    opponent(x, y).nil? ? false : true
+  end
+  
   def last_piece_moved
     game.pieces.order(:updated_at).last 
   end 
@@ -18,13 +71,6 @@ class Pawn < Piece
     last_piece_moved.piece_type == 'Pawn' && 
     last_piece_moved.en_passant_y == y && last_piece_moved.en_passant_x == x_position
   end 
-
- # def move_to!(x, y)
-  #  return unless color == game.user_turn
-   # update_en_passant_position(x, y) 
-   # capture_passant(x, y) #if valid_en_passant?(x, y)
-    #super
-  #end 
 
   def capture_passant(x, y)
     capture_piece_at!(last_piece_moved.x_position, last_piece_moved.y_position) if valid_en_passant?(x, y)
@@ -38,18 +84,6 @@ class Pawn < Piece
 
   def in_starting_position?
     (color == 'WHITE' && y_position == 1) || (color == 'BLACK' && y_position == 6)
-  end
-
-  def one_square?(x, y)
-    unoccupied?(x, y) && (x - x_position).abs == 0 && (y - y_position).abs == 1
-  end
-
-  def two_squares?(x, y)
-    unoccupied?(x, y) && in_starting_position? && ((x - x_position). abs == 0 && (y - y_position).abs == 2)
-  end
-
-  def is_capture?(x, y)
-    game.space_occupied?(x, y) && ((y - y_position).abs == 1 && (x - x_position).abs == 1)
   end
 
 #-----> PAWN PROMOTION <-----#

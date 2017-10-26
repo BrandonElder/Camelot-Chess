@@ -15,27 +15,29 @@ class Piece < ApplicationRecord
   def piece_image
     "#{color.downcase}_#{piece_type.downcase}.png"
   end
+  
+  def valid_move?(x, y)
+    within_chessboard?(x, y) && space_available?(x,y)
+  end
+  
+  def valid_capture?(x, y)
+    diagonal_move?(x, y) && occupied?(x, y) && opponent(x, y).color != color || forward_move?(y) &&
+    occupied?(x, y) && opponent(x, y).color != color
+  end
 
   def move_to!(x, y)
     if valid_move?(x, y) && your_turn? && attack!(x, y) != false
       Piece.transaction do
         attack!(x, y)
         update!(x_position: x, y_position: y)
-        game.pass_turn!(game.user_turn)
-        #if game.check == color
-         # raise ActiveRecord::Rollback, 'Move forbidden: exposes king to check'
-        #end
       end
-    elsif valid_move?(x, y) && your_turn?
-      game.pass_turn!(game.user_turn)
-      update!(x_position: x, y_position: y)
+    
+    game.pass_turn!(game.user_turn)
     end
   end
-
-  def valid_move?(x, y)
-    return false if is_obstructed?(x, y)
-    return false if occupied_by_mycolor_piece?(x, y)
-    within_chessboard?(x, y)
+  
+  def friendly_piece(x, y)
+    game.pieces.find_by(x_position: x, y_position: y, color: color)
   end
   
   def opponent(x, y)
@@ -61,6 +63,13 @@ class Piece < ApplicationRecord
     end
   end
   
+  def x_difference(x)
+    (x - x_position).abs
+  end
+
+  def y_difference(y)
+    (y - y_position).abs
+  end
   
   
   def not_into_check?(x,y)
