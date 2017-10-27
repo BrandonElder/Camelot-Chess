@@ -12,16 +12,19 @@ class Pawn < Piece
   #  game.space_occupied?(x, y) && ((y - y_position).abs == 1 && (x - x_position).abs == 1)
   # end
   
+  def valid_move?(x, y)
+    super && pawn_able?(x, y)
+  end
+  
+  def valid_capture?(x, y)
+    super
+  end
+  
   def move_to!(x, y)
     super
   end
- 
   
-  def valid_move?(x, y)
-    super && pawn_possible?(x, y)
-  end
-  
-  def pawn_possible?(x, y)
+  def pawn_able?(x, y)
     (one_square?(x, y) && vertical_move?(x, y)) || (two_squares?(x, y) && vertical_move?(x, y)) ||
     valid_capture?(x, y)
   end
@@ -32,10 +35,6 @@ class Pawn < Piece
 
   def two_squares?(x, y)
     unoccupied?(x, y) && in_starting_position? && ((x - x_position). abs == 0 && (y - y_position).abs == 2)
-  end
-  
-  def valid_capture?(x, y)
-    super
   end
   
   def forward_move?(y)
@@ -53,14 +52,6 @@ class Pawn < Piece
 
   def horizontal_move?(x, y)
     (y_position == y) && (x_position != x) ? true : false
-  end
-  
-  def opponent(x, y)
-    game.find_piece(x, y)
-  end
-  
-  def occupied?(x, y)
-    opponent(x, y).nil? ? false : true
   end
   
   def last_piece_moved

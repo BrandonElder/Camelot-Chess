@@ -14,7 +14,7 @@ class PiecesController < ApplicationController
     elsif current_piece.move_to!(x, y) == false
       render text: "Invalid Move"
     else
-      render text: "Valid Move or Valid Capture"
+      render text: "Valid Move"
     end
   end
   

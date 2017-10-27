@@ -16,36 +16,41 @@ class Piece < ApplicationRecord
     "#{color.downcase}_#{piece_type.downcase}.png"
   end
   
+  def self.piece_types
+    %w(Pawn Knight Bishop Rook Queen King)
+  end
+  
   def valid_move?(x, y)
     within_chessboard?(x, y) && space_available?(x,y)
   end
   
   def valid_capture?(x, y)
-    diagonal_move?(x, y) && occupied?(x, y) && opponent(x, y).color != color || forward_move?(y) &&
-    occupied?(x, y) && opponent(x, y).color != color
+    diagonal_move?(x, y) && occupied_by_opposing_piece?(x, y) || 
+      forward_move?(y) && occupied_by_opposing_piece?(x, y)
+  end
+  
+  def capture!(x, y)
+    if valid_capture?(x, y)
+      opponent(x, y).update(x_position: -1, y_position: -1)
+    elsif unoccupied?(x, y)
+      true
+    else
+      false
+    end
   end
 
   def move_to!(x, y)
-    if valid_move?(x, y) && your_turn? && attack!(x, y) != false
+    if valid_move?(x, y) && your_turn? && capture!(x, y) != false
       Piece.transaction do
-        attack!(x, y)
+        capture!(x, y)
         update!(x_position: x, y_position: y)
       end
-    
     game.pass_turn!(game.user_turn)
     end
   end
   
-  def friendly_piece(x, y)
-    game.pieces.find_by(x_position: x, y_position: y, color: color)
-  end
-  
   def opponent(x, y)
     game.find_piece(x, y)
-  end
-  
-  def occupied?(x, y)
-    opponent(x, y).nil? ? false : true
   end
   
   def your_turn?
@@ -53,31 +58,8 @@ class Piece < ApplicationRecord
     true
   end
   
-  def attack!(x, y)
-    if occupied?(x, y) && opponent(x, y).color != color
-      opponent(x, y).update(x_position: -1, y_position: -1)
-    elsif !occupied?(x, y)
-      true
-    else
-      false
-    end
-  end
-  
-  def x_difference(x)
-    (x - x_position).abs
-  end
-
-  def y_difference(y)
-    (y - y_position).abs
-  end
-  
-  
   def not_into_check?(x,y)
     !move_causes_check?(x,y)
-  end
-
-  def self.piece_types
-    %w(Pawn Knight Bishop Rook Queen King)
   end
 
   def within_chessboard?(x, y)
@@ -178,16 +160,6 @@ class Piece < ApplicationRecord
       'vertical'
     elsif (y_end - y_position).abs == (x_end - x_position).abs
       'diagonal'
-    end
-  end
-
-  def capture_piece_at!(x, y)
-    if occupied_by_opposing_piece?
-      piece_at(x, y).update_attributes(x_position: -1, y_position: -1)
-    elsif !space_occupied?(x, y)
-      true
-    else
-      false
     end
   end
   
