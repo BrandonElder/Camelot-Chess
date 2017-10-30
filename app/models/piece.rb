@@ -26,7 +26,7 @@ class Piece < ApplicationRecord
   
   def valid_capture?(x, y)
     diagonal_move?(x, y) && occupied_by_opposing_piece?(x, y) || 
-      forward_move?(y) && occupied_by_opposing_piece?(x, y)
+      vertical_move?(x, y) && occupied_by_opposing_piece?(x, y)
   end
   
   def capture!(x, y)
@@ -192,7 +192,7 @@ class Piece < ApplicationRecord
   end
 
   def vertical_move?(x, y)
-    x_position == x && y_position != y
+    (x - x_position).abs == 0 && (y - y_position).abs == 1
   end
 
   def horizontal_move?(x, y)

@@ -10,11 +10,14 @@ class PiecesController < ApplicationController
     x = params[:piece][:x_position].to_i
     y = params[:piece][:y_position].to_i
     if current_piece.color != current_piece.game.user_turn
-      render text: "It is the other player's turn"
-    elsif current_piece.move_to!(x, y) == false
-      render text: "Invalid Move"
+      redirect_back fallback_location: game_path(current_game), alert: "It's the other player\'s turn"
+    elsif !current_piece.move_to!(x, y)
+      redirect_back fallback_location: game_path(current_game), notice: "Invalid Move!"
+    # elsif current_piece.valid_capture?(x, y)
+    # redirect_back fallback_location: game_path(current_game), notice: "Valid Capture!"
     else
-      render text: "Valid Move"
+      current_piece.move_to!(x, y)
+      redirect_back fallback_location: game_path(current_game), notice: "Valid Move or Capture!"
     end
   end
   

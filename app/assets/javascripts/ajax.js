@@ -27,8 +27,6 @@ $( function() {
           success: function(response) {
             if(response == 'OK') {
               console.log(response);
-            } else {
-              alert(response);
             }
           }
         });

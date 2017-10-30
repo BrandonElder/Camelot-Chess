@@ -29,9 +29,17 @@ html {
 .alert.alert-success.alert-dismissible,
 .alert.alert-error.alert-dismissible,
 .alert.alert-alert.alert-dismissible {
-  margin: 20px auto;
-  width: 100%;
+  margin: 10px auto;
+  width: 50%;
   text-align: center;
   background-color: indianred;
+  color: white;
+}
+
+.notice {
+  margin: 10px auto;
+  width: 50%;
+  text-align: center;
+  background-color: lightseagreen;
   color: white;
 }

@@ -38,7 +38,7 @@ class GamesController < ApplicationController
   def join
     @game = Game.find(params[:id])
     if @game.black_user.nil? && current_user != @game.white_user
-      @game.update_attributes(black_user_id: current_user.id)
+      @game.update(black_user_id: current_user.id)
       redirect_to game_path(@game)
     else
       flash[:alert] = "I'm sorry. This game is full or you are already a player."
@@ -47,7 +47,9 @@ class GamesController < ApplicationController
   end
   
   def update
-    @game = Game.find(params[:id])
+    @game = current_game
+    @game.update(game_params)
+    @game.reload
   end
 
   private
@@ -62,6 +64,10 @@ class GamesController < ApplicationController
     else 
       nil
     end 
+  end
+  
+  def current_game
+    @game ||= Game.find(params[:id])
   end
 
   def assign_black_pieces_to_current_user
