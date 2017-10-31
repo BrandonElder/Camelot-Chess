@@ -43,7 +43,7 @@ class Piece < ApplicationRecord
     if valid_move?(x, y) && your_turn? && capture!(x, y) != false
       Piece.transaction do
         capture!(x, y)
-        update!(x_position: x, y_position: y)
+        update!(x_position: x, y_position: y, move_num: +1)
       end
     game.pass_turn!(game.user_turn)
     end

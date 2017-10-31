@@ -11,16 +11,26 @@ class Pawn < Piece
   end
   
   def move_to!(x, y)
-    super
+    if valid_en_passant?(x, y)
+      Piece.transaction do
+        last_piece_moved.update!(x_position: -1, y_position: -1)
+        update!(x_position: x, y_position: y, move_num: move_num + 1)
+      end
+      game.pass_turn!(game.user_turn)
+    else
+      super
+    end
   end
   
   def pawn_able?(x, y)
     valid_vertical_move?(x, y) || valid_capture?(x, y)
   end
   
-  def valid_vertical_move?(x,y)
-    unoccupied?(x, y) && (x - x_position).abs == 0 && (y - y_position).abs == 1 ||
-    unoccupied?(x, y) && in_starting_position? && ((x - x_position). abs == 0 && (y - y_position).abs == 2)
+  def valid_vertical_move?(x, y)
+    unoccupied?(x, y) && (x - x_position).abs == 0 && 
+    (y - y_position).abs == 1 ||
+    unoccupied?(x, y) && in_starting_position? && 
+    ((x - x_position). abs == 0 && (y - y_position).abs == 2)
   end
   
   def backward_move?(y)
@@ -36,34 +46,28 @@ class Pawn < Piece
     x_position - x.abs != 0
   end
   
-  def last_piece_moved
-    game.pieces.order(:updated_at).last 
+  def in_starting_position?
+    (color == 'WHITE' && y_position == 1) || 
+    (color == 'BLACK' && y_position == 6)
   end
   
   def piece_at(x, y)
     game.pieces.find_by(x_position: x, y_position: y)
   end
   
+#-----------> EN PASSANT <--------------#
+
+  def last_piece_moved
+    game.pieces.order(:updated_at).last 
+  end
   
-  #-----------> EN PASSANT <--------------#
-
   def valid_en_passant?(x, y)
-    last_piece_moved.piece_type == 'Pawn' && 
-    last_piece_moved.en_passant_y == y && last_piece_moved.en_passant_x == x_position
-  end 
-
-  def capture_passant(x, y)
-    capture_piece_at!(last_piece_moved.x_position, last_piece_moved.y_position) if valid_en_passant?(x, y)
-  end 
-
-  def update_en_passant_position(x, y)
-    return unless in_starting_position?
-    dy = y - y_position 
-    update_attributes(en_passant_x: x_position, en_passant_y: (y_position - dy/2))
-  end 
-
-  def in_starting_position?
-    (color == 'WHITE' && y_position == 1) || (color == 'BLACK' && y_position == 6)
+    last_piece = last_piece_moved
+    your_turn? &&
+    last_piece.piece_type == "Pawn" &&
+    last_piece.move_num == 1 &&
+    last_piece.y_position == (last_piece.color == 'WHITE' ? 3 : 4) &&
+    diagonal_move?(x, y) && unoccupied?(x, y)
   end
 
 #-----> PAWN PROMOTION <-----#
@@ -80,7 +84,8 @@ class Pawn < Piece
       piece = piece_at(x, y)
       piece.updat(x_position: nil, y_position: nil)
       piece.reload
-      game.pieces.create(piece_type: "Queen", x_position: x, y_position: y, state: 'promoted-piece', color: color)
+      game.pieces.create(piece_type: "Queen", x_position: x, y_position: y, 
+                                    state: 'promoted-piece', color: color)
     else
       false
     end

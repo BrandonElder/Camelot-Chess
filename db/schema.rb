@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171005013955) do
+ActiveRecord::Schema.define(version: 20171031131714) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,11 +41,12 @@ ActiveRecord::Schema.define(version: 20171005013955) do
     t.integer  "x_position"
     t.integer  "y_position"
     t.string   "piece_type"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.string   "state"
     t.integer  "en_passant_x"
     t.integer  "en_passant_y"
+    t.integer  "move_num",     default: 0
   end
 
   create_table "users", force: :cascade do |t|
