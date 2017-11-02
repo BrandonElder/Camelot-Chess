@@ -17,6 +17,14 @@ class Pawn < Piece
         update!(x_position: x, y_position: y, move_num: move_num + 1)
       end
       game.pass_turn!(game.user_turn)
+    elsif promote?(y)
+      Piece.transaction do
+        capture!(x, y)
+        update!(
+          x_position: x, y_position: y,
+          piece_type: "Queen", color: color, move_num: move_num + 1)
+      end
+      game.pass_turn!(game.user_turn)
     else
       super
     end
@@ -51,10 +59,6 @@ class Pawn < Piece
     (color == 'BLACK' && y_position == 6)
   end
   
-  def piece_at(x, y)
-    game.pieces.find_by(x_position: x, y_position: y)
-  end
-  
 #-----------> EN PASSANT <--------------#
 
   def last_piece_moved
@@ -72,6 +76,14 @@ class Pawn < Piece
 
 #-----> PAWN PROMOTION <-----#
 
+  def piece_at(x, y)
+    game.pieces.find_by(x_position: x, y_position: y)
+  end
+  
+  def promote?(y)
+    y == 6 || y == 1
+  end
+
   # checks to see if a pawn is promotable.
   def promotable?(x, y)
     return true if y == 7 && color == "WHITE" || y == 0 && color == "BLACK"
@@ -79,13 +91,14 @@ class Pawn < Piece
   end
 
   # performs the pawn promotion by checking to see if the pawn meets the necessary requirements.
-  def promote!(x, y)
+  def ppromote!(x, y)
     if promotable?(x, y)
-      piece = piece_at(x, y)
-      piece.updat(x_position: nil, y_position: nil)
-      piece.reload
-      game.pieces.create(piece_type: "Queen", x_position: x, y_position: y, 
-                                    state: 'promoted-piece', color: color)
+      Piece transaction do
+        update(x_position: nil, y_position: nil)
+        piece.reload
+        game.pieces.create(piece_type: "Queen", x_position: x, y_position: y, 
+                                      state: 'promoted-piece', color: color)
+      end
     else
       false
     end

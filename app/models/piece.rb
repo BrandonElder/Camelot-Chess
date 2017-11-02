@@ -116,17 +116,23 @@ class Piece < ApplicationRecord
   end
 
   def is_obstructed?(x, y)
-    x_end = x
-    y_end = y
-    path = check_path(x_position, y_position, x_end, y_end)
-
-    return horizontal_obstruction?(x_end, y_end) if path == 'horizontal'
-
-    return vertical_obstruction(x_end, y_end) if path == 'vertical'
-
-    return diagonal_obstruction(x_end, y_end) if path == 'diagonal'
-
+    x = x
+    y = y
+    path = check_path(x_position, y_position, x, y)
+    return horizontal_obstruction?(x, y) if path == 'horizontal'
+    return vertical_obstruction(x, y) if path == 'vertical'
+    return diagonal_obstruction(x, y) if path == 'diagonal'
     false
+  end
+  
+  def check_path(x_position, y_position, x, y)
+    if y_position == y
+      'horizontal'
+    elsif x_position == x
+      'vertical'
+    elsif (y - y_position).abs == (x - x_position).abs
+      'diagonal'
+    end
   end
 
   def can_be_blocked?(color)
@@ -151,16 +157,6 @@ class Piece < ApplicationRecord
     end
     reload
     state
-  end
-
-  def check_path(x_position, y_position, x_end, y_end)
-    if y_position == y_end
-      'horizontal'
-    elsif x_position == x_end
-      'vertical'
-    elsif (y_end - y_position).abs == (x_end - x_position).abs
-      'diagonal'
-    end
   end
   
   def space_available?(x,y)
