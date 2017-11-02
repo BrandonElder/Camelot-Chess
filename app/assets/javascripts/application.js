@@ -21,3 +21,9 @@
 $(document).ready(function () {
   $(".alert").fadeOut(5000);
 });
+
+document.addEventListener("turbolinks:load", function() {
+  $(function() {
+     $(".notice").fadeOut(2000);
+   });
+});

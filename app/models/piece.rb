@@ -2,6 +2,7 @@
 class Piece < ApplicationRecord
   after_initialize :set_default_state
   belongs_to :game
+  
 
   self.inheritance_column = :piece_type
   scope :bishops, -> { where(piece_type: "Bishop") }
@@ -14,42 +15,51 @@ class Piece < ApplicationRecord
   def piece_image
     "#{color.downcase}_#{piece_type.downcase}.png"
   end
-
-  def move_to!(x, y)
-    if color == game.user_turn
-      if valid_move?(x, y) && space_available?(x, y) && not_into_check?(x, y)
-        capture_piece_at!(x, y) if occupied_by_opposing_piece?(x, y)
-        game.pass_turn!(game.user_turn)
-        change_location(x, y)
-      elsif !occupied_by_opposing_piece?(x, y)
-        false
-      elsif piece_type == 'King' && valid_move?(x, y) && space_available?(x, y) && not_into_check(x, y)
-        if legal_castle_move?
-          if castle!
-            game.pass_turn!(game.user_turn)
-          end
-        else
-          standard_king_move?(x, y)
-          game.pass_turn!(game.user_turn)
-        end 
-      else
-        false
-      end
+  
+  def self.piece_types
+    %w(Pawn Knight Bishop Rook Queen King)
+  end
+  
+  def valid_move?(x, y)
+    within_chessboard?(x, y) && space_available?(x,y)
+  end
+  
+  def valid_capture?(x, y)
+    diagonal_move?(x, y) && occupied_by_opposing_piece?(x, y) || 
+      vertical_move?(x, y) && occupied_by_opposing_piece?(x, y)
+  end
+  
+  def capture!(x, y)
+    if valid_capture?(x, y)
+      opponent(x, y).update(x_position: -1, y_position: -1)
+    elsif unoccupied?(x, y)
+      true
+    else
+      false
     end
   end
 
+  def move_to!(x, y)
+    if valid_move?(x, y) && your_turn? && capture!(x, y) != false
+      Piece.transaction do
+        capture!(x, y)
+        update!(x_position: x, y_position: y, move_num: +1)
+      end
+    game.pass_turn!(game.user_turn)
+    end
+  end
+  
+  def opponent(x, y)
+    game.find_piece(x, y)
+  end
+  
+  def your_turn?
+    return false if game.user_turn != color
+    true
+  end
+  
   def not_into_check?(x,y)
     !move_causes_check?(x,y)
-  end
-
-  def valid_move?(x, y)
-    return false if is_obstructed?(x, y)
-    return false if occupied_by_mycolor_piece?(x, y)
-    within_chessboard?(x, y)
-  end
-
-  def self.piece_types
-    %w(Pawn Knight Bishop Rook Queen King)
   end
 
   def within_chessboard?(x, y)
@@ -106,17 +116,23 @@ class Piece < ApplicationRecord
   end
 
   def is_obstructed?(x, y)
-    x_end = x
-    y_end = y
-    path = check_path(x_position, y_position, x_end, y_end)
-
-    return horizontal_obstruction?(x_end, y_end) if path == 'horizontal'
-
-    return vertical_obstruction(x_end, y_end) if path == 'vertical'
-
-    return diagonal_obstruction(x_end, y_end) if path == 'diagonal'
-
+    x = x
+    y = y
+    path = check_path(x_position, y_position, x, y)
+    return horizontal_obstruction?(x, y) if path == 'horizontal'
+    return vertical_obstruction(x, y) if path == 'vertical'
+    return diagonal_obstruction(x, y) if path == 'diagonal'
     false
+  end
+  
+  def check_path(x_position, y_position, x, y)
+    if y_position == y
+      'horizontal'
+    elsif x_position == x
+      'vertical'
+    elsif (y - y_position).abs == (x - x_position).abs
+      'diagonal'
+    end
   end
 
   def can_be_blocked?(color)
@@ -142,23 +158,13 @@ class Piece < ApplicationRecord
     reload
     state
   end
+  
+  def space_available?(x,y)
+    !occupied_by_mycolor_piece?(x, y)
+  end
 
   def space_occupied?(x, y)
     game.pieces.where(x_position: x, y_position: y).present?
-  end
-
-  def check_path(x_position, y_position, x_end, y_end)
-    if y_position == y_end
-      'horizontal'
-    elsif x_position == x_end
-      'vertical'
-    elsif (y_end - y_position).abs == (x_end - x_position).abs
-      'diagonal'
-    end
-  end
-
-  def capture_piece_at!(x, y)
-    piece_at(x, y).update_attributes(x_position: nil, y_position: nil)
   end
 
   def unoccupied?(x, y)
@@ -182,7 +188,7 @@ class Piece < ApplicationRecord
   end
 
   def vertical_move?(x, y)
-    x_position == x && y_position != y
+    (x - x_position).abs == 0 && (y - y_position).abs == 1
   end
 
   def horizontal_move?(x, y)
@@ -201,14 +207,6 @@ class Piece < ApplicationRecord
 
   def change_location(x,y)
     update_attributes(x_position: x, y_position: y)
-  end
-
-  def space_available?(x,y)
-    !occupied_by_mycolor_piece?(x, y)
-  end
-
-  def space_occupied?(x, y)
-    game.pieces.where(x_position: x, y_position: y).present?
   end
 
   def set_default_state

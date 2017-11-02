@@ -21,14 +21,12 @@ $( function() {
           type: 'PUT',
           url: urlUpdatePath,
           data: { 
-            piece: { x_position: x, y_position: y }, 
+            piece: { x_position: x, y_position: y },
             piece_type: type,
           },
           success: function(response) {
             if(response == 'OK') {
               console.log(response);
-            } else {
-              alert(response);
             }
           }
         });
