@@ -2,11 +2,9 @@
 class Knight < Piece
 
   def valid_move?(x, y)
-    super(x, y)
-
+    super
     move_range = [[1, 2], [1, -2], [2, 1], [2, -1], [-1, 2], [-1, -2], [-2, 1], [-2, -1]]
     move_coordinates = []
-
     move_range.each do |dx, dy|
       move_coordinates << [(x_position + dx), (y_position + dy)]
     end
