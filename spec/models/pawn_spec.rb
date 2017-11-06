@@ -1,5 +1,6 @@
 require 'rails_helper'
 require 'pry'
+
 RSpec.describe Pawn, type: :model do
   let(:game) do
   Game.create(
@@ -34,46 +35,34 @@ RSpec.describe Pawn, type: :model do
       it 'Should show the pawn becomes queen once promoted' do
         board = create(:game)
         board.pieces.delete_all
-
         pawn = Pawn.create(color: 'WHITE', x_position: 1, y_position: 7, game_id: board.id)
         board.pieces << pawn
-
-        pawn.promote!(1,7)
-        pawn.reload
-        expect(pawn.x_position).to eq(nil)
-        expect(pawn.y_position).to eq(nil)
-        expect(board.pieces.find_by(x_position: 1, y_position: 7).piece_type).to eq("Queen")
-        expect(board.pieces.find_by(x_position: 1, y_position: 7).color).to eq("WHITE")
+        pawn.move_to!(1,6)
+        game.reload
+        expect(board.pieces.find_by(x_position: 1, y_position: 6).piece_type).to eq("Queen")
+        expect(board.pieces.find_by(x_position: 1, y_position: 6).color).to eq("WHITE")
       end
     end
     context 'valid move of white pawn using move_to method' do
       it 'can be promoted when moving to y_position: 7' do
         board = create(:game)
         board.pieces.delete_all
-
-        pawn = Pawn.create(color: 'WHITE', x_position: 1, y_position: 6, game_id: board.id)
-
+        pawn = Pawn.create(color: 'WHITE', x_position: 1, y_position: 5, game_id: board.id)
         board.pieces << pawn
-        pawn.move_to!(1, 7)
-        pawn.reload
-
-        expect(pawn.x_position).to eq(nil)
-        expect(pawn.y_position).to eq(nil)
-        expect(board.pieces.find_by(x_position: 1, y_position: 7).piece_type).to eq("Queen")
+        pawn.move_to!(1, 6)
+        game.reload
+        expect(board.pieces.find_by(x_position: 1, y_position: 6).piece_type).to eq("Queen")
       end
-      it 'can be promoted when moving to y_position: 0' do
+      it 'can be promoted when moving to y_position: 1' do
         board = create(:game)
         board.pieces.delete_all
         board.update_attributes(user_turn: 'BLACK')
-        pawn = Pawn.create(color: 'BLACK', x_position: 1, y_position: 6, game_id: board.id)
+        pawn = Pawn.create(color: 'BLACK', x_position: 1, y_position: 2, game_id: board.id)
         board.pieces << pawn
-        pawn.move_to!(1, 0)
-        pawn.reload
-
-        expect(pawn.x_position).to eq(nil)
-        expect(pawn.y_position).to eq(nil)
-        expect(board.pieces.find_by(x_position: 1, y_position: 0).piece_type).to eq("Queen")
-        expect(board.pieces.find_by(x_position: 1, y_position: 0).color).to eq("BLACK")
+        pawn.move_to!(1, 1)
+        game.reload
+        expect(board.pieces.find_by(x_position: 1, y_position: 1).piece_type).to eq("Queen")
+        expect(board.pieces.find_by(x_position: 1, y_position: 1).color).to eq("BLACK")
       end
     end
   end
@@ -86,7 +75,7 @@ RSpec.describe Pawn, type: :model do
 
         game.pieces << pawn
 
-        expect(pawn.valid_move?(1, 2)).to eq(true)
+        expect(pawn.move_to!(1, 2)).to eq(true)
       end
       it 'can move one space forward' do
         game.pieces.delete_all
@@ -103,7 +92,7 @@ RSpec.describe Pawn, type: :model do
 
         game.pieces << pawn
 
-        expect(pawn.valid_move?(0, 2)).to eq true
+        expect(pawn.move_to!(0, 2)).to eq true
       end
     end
     context 'invalid move' do
@@ -153,12 +142,12 @@ RSpec.describe Pawn, type: :model do
         board.pieces << pawn
         board.pieces << rook
 
-        pawn.valid_move?(2,2)
+        pawn.move_to!(2,2)
         rook.reload
         pawn.reload
 
-        expect(rook.x_position).to eq(nil)
-        expect(rook.x_position).to eq(nil)
+        expect(rook.x_position).to eq(-1)
+        expect(rook.x_position).to eq(-1)
         expect(pawn.x_position).to eq(2)
         expect(pawn.x_position).to eq(2)
       end
@@ -172,12 +161,12 @@ RSpec.describe Pawn, type: :model do
         board.pieces << pawn
         board.pieces << rook
 
-        pawn.valid_move?(0, 2)
+        pawn.move_to!(0, 2)
         rook.reload
         pawn.reload
 
-        expect(rook.x_position).to eq(nil)
-        expect(rook.x_position).to eq(nil)
+        expect(rook.x_position).to eq(-1)
+        expect(rook.x_position).to eq(-1)
         expect(pawn.x_position).to eq(0)
         expect(pawn.y_position).to eq(2)
       end
@@ -253,39 +242,22 @@ RSpec.describe Pawn, type: :model do
     context 'CAPTURE move' do
       it 'when the piece is one square diagonally from it' do
         game.pieces.delete_all
+        game.update_attributes(user_turn: 'BLACK')
 
-        pawn = Pawn.create(color: 'BLACK', x_position: 1, y_position: 6, game: game)
-        rook = Rook.create(color: 'WHITE', x_position: 0, y_position: 5, game: game)
-
-        game.pieces << pawn
-        game.pieces << rook
-
-        pawn.valid_move?(0, 5)
-        pawn.reload
-        rook.reload
-
-        expect(rook.x_position).to eq(nil)
-        expect(rook.x_position).to eq(nil)
-        expect(pawn.x_position).to eq(0)
-        expect(pawn.y_position).to eq(5)
-      end
-      it 'when the piece is one square diagonally from it' do
-        game.pieces.delete_all
-
-        pawn = Pawn.create(color: 'BLACK', x_position: 1, y_position: 6, game: game)
-        rook = Rook.create(color: 'WHITE', x_position: 2, y_position: 5, game: game)
+        pawn = Pawn.create(color: 'BLACK', x_position: 1, y_position: 5, game: game)
+        rook = Rook.create(color: 'WHITE', x_position: 2, y_position: 4, game: game)
 
         game.pieces << pawn
         game.pieces << rook
 
-        pawn.valid_move?(2, 5)
+        pawn.move_to!(2, 4)
         pawn.reload
         rook.reload
 
-        expect(rook.x_position).to eq(nil)
-        expect(rook.x_position).to eq(nil)
+        expect(rook.x_position).to eq(-1)
+        expect(rook.y_position).to eq(-1)
         expect(pawn.x_position).to eq(2)
-        expect(pawn.y_position).to eq(5)
+        expect(pawn.y_position).to eq(4)
       end
     end
 

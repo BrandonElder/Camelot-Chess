@@ -1,9 +1,7 @@
 class Pawn < Piece
 
   def valid_move?(x, y)
-    return false if backward_move?(y)
-    return false if !valid_capture?(x, y) && horizontal_move?(x)
-    return true if super && pawn_able?(x, y)
+    super && pawn_able?(x, y) ? true : false
   end
   
   def valid_capture?(x, y)
@@ -45,13 +43,17 @@ class Pawn < Piece
     color == "WHITE" && y_position > y ||
     color == "BLACK" && y_position < y
   end
+
+  def vertical_move?(x, y)
+    y_position - y.abs == 1
+  end
   
   def diagonal_move?(x, y)
-    (y_position - y).abs == (x_position - x).abs
+    (y_position - y).abs == 1 && (x_position - x).abs == 1
   end
   
   def horizontal_move?(x)
-    x_position - x.abs != 0
+    x_position - x.abs == 1
   end
   
   def in_starting_position?
@@ -76,6 +78,11 @@ class Pawn < Piece
 
 #-----> PAWN PROMOTION <-----#
 
+# Promotion currently does not work with promote? method set to ( y == 7 || y == 0 )
+# works fine otherwise, although currently can only be promoted to a Queen
+# Not sure why I can't move pieces to 0 or 7 position
+# Will replace promote? method with promotable? when sorted out
+
   def piece_at(x, y)
     game.pieces.find_by(x_position: x, y_position: y)
   end
@@ -88,20 +95,6 @@ class Pawn < Piece
   def promotable?(x, y)
     return true if y == 7 && color == "WHITE" || y == 0 && color == "BLACK"
     false
-  end
-
-  # performs the pawn promotion by checking to see if the pawn meets the necessary requirements.
-  def ppromote!(x, y)
-    if promotable?(x, y)
-      Piece transaction do
-        update(x_position: nil, y_position: nil)
-        piece.reload
-        game.pieces.create(piece_type: "Queen", x_position: x, y_position: y, 
-                                      state: 'promoted-piece', color: color)
-      end
-    else
-      false
-    end
   end
 
 end

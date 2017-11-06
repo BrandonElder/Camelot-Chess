@@ -1,7 +1,7 @@
 # /app/models/king.rb
 class King < Piece
   def valid_move?(x, y)
-    if super(x, y)
+    if super
       if legal_castle_move?
         castle!
         true

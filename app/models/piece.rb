@@ -26,7 +26,8 @@ class Piece < ApplicationRecord
   
   def valid_capture?(x, y)
     diagonal_move?(x, y) && occupied_by_opposing_piece?(x, y) || 
-      vertical_move?(x, y) && occupied_by_opposing_piece?(x, y)
+    vertical_move?(x, y) && occupied_by_opposing_piece?(x, y) ||
+    horizontal_move?(x,y) && occupied_by_opposing_piece?(x, y)
   end
   
   def capture!(x, y)
@@ -89,7 +90,7 @@ class Piece < ApplicationRecord
       end
     # path is vertical up
     elsif y_position > y_end
-      (y_position - 1).downto(y_end + 1) do |y|
+      (y_position - 1).downto( + 1) do |y|
         return true if space_occupied?(x_position, y)
       end
     end
@@ -184,23 +185,15 @@ class Piece < ApplicationRecord
   end
 
   def diagonal_move?(x, y)
-    (y_position - y).abs == (x_position - x).abs
+    !diagonal_obstruction(x, y) && (y_position - y).abs == (x_position - x).abs
   end
 
   def vertical_move?(x, y)
-    (x - x_position).abs == 0 && (y - y_position).abs == 1
+    !vertical_obstruction(x, y) && (y_position != y) && (x_position == x) ? true : false
   end
 
   def horizontal_move?(x, y)
-    (y_position == y) && (x_position != x) ? true : false
-  end
-
-  def available_moves
-    Game.all_board_coordinates.select do |coordinate_pair|
-      valid_move?(coordinate_pair[0], coordinate_pair[1]) &&
-        !is_obstructed?(coordinate_pair[0], coordinate_pair[1]) &&
-        !occupied_by_mycolor_piece?(coordinate_pair[0], coordinate_pair[1])
-    end
+    !horizontal_obstruction?(x, y) && (y_position == y) && (x_position != x) ? true : false
   end
 
   private

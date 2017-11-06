@@ -129,8 +129,8 @@ RSpec.describe King, type: :model do
 
         pawn.reload
 
-        expect(pawn.x_position).to eq(nil)
-        expect(pawn.y_position).to eq(nil)
+        expect(pawn.x_position).to eq(-1)
+        expect(pawn.y_position).to eq(-1)
       end
     end
   end
