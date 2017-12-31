@@ -4,6 +4,7 @@ class Game < ApplicationRecord
   belongs_to :white_user, class_name: 'User'
   belongs_to :black_user, class_name: 'User', optional: true
   has_many :pieces
+  validates :name, presence: true
   after_create :fill_board, :first_turn!
   scope :available, -> { where(black_user_id: nil) }
 
