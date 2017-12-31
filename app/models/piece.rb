@@ -41,7 +41,7 @@ class Piece < ApplicationRecord
   end
 
   def move_to!(x, y)
-    if valid_move?(x, y) && your_turn? && capture!(x, y) != false
+    if valid_move?(x, y) && capture!(x, y) != false
       Piece.transaction do
         capture!(x, y)
         update!(x_position: x, y_position: y, move_num: +1)
@@ -185,15 +185,23 @@ class Piece < ApplicationRecord
   end
 
   def diagonal_move?(x, y)
-    !diagonal_obstruction(x, y) && (y_position - y).abs == (x_position - x).abs
+    !diagonal_obstruction(x, y) &&
+    (y_position - y).abs == (x_position - x).abs
   end
 
   def vertical_move?(x, y)
-    !vertical_obstruction(x, y) && (y_position != y) && (x_position == x) ? true : false
+    !vertical_obstruction(x, y)
+    (y_position != y) && (x_position == x)
   end
 
   def horizontal_move?(x, y)
-    !horizontal_obstruction?(x, y) && (y_position == y) && (x_position != x) ? true : false
+    !horizontal_obstruction?(x, y)
+    (x_position != x) && (y_position == y)
+  end
+
+  def backward_move?(y)
+    color == "WHITE" && y_position > y ||
+    color == "BLACK" && y_position < y
   end
 
   private
