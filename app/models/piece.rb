@@ -2,6 +2,12 @@
 class Piece < ApplicationRecord
   after_initialize :set_default_state
   belongs_to :game
+
+  validates :color, presence: true
+  validates :piece_type, presence: true
+  validates :x_position, presence: true
+  validates :y_position, presence: true
+  validates :game_id, presence: true
   
 
   self.inheritance_column = :piece_type
