@@ -74,6 +74,8 @@ GEM
     factory_girl_rails (4.8.0)
       factory_girl (~> 4.8.0)
       railties (>= 3.0.0)
+    faker (1.8.7)
+      i18n (>= 0.7)
     ffi (1.9.18)
     figaro (1.1.1)
       thor (~> 0.14)
@@ -246,6 +248,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   devise
   factory_girl_rails (~> 4.0)
+  faker
   figaro
   jbuilder (~> 2.5)
   jquery-rails
@@ -272,4 +275,4 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 BUNDLED WITH
-   1.15.4
+   1.16.1

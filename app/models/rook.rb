@@ -6,12 +6,12 @@ class Rook < Piece
   end
 
   def rook_able?(x, y)
-    horizontal_move?(x, y) || vertical_move?(x, y) && !occupied_by_mycolor_piece?(x, y)
+    return false if vertical_obstruction(x,y)
+    return true if horizontal_move?(x, y) || vertical_move?(x, y) || valid_capture?(x,y)
   end
 
-  def valid_capture?(x, y)
-    vertical_move?(x, y) && occupied_by_opposing_piece?(x, y) ||
-    horizontal_move?(x,y) && occupied_by_opposing_piece?(x, y)
+  def valid_capture?(x,y)
+    occupied_by_opposing_piece?(x, y) && (horizontal_move?(x, y) || vertical_move?(x, y))
   end
 
 end

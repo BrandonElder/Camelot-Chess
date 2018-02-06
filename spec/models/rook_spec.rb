@@ -14,6 +14,7 @@ RSpec.describe Rook, type: :model do
   describe 'valid_move?' do
     context 'regular moves' do
       it 'returns true if moving 2 spaces vertically' do
+        game = create(:game)
         game.pieces.delete_all
         rook = create_game_with_one_white_rook
         expect(rook.valid_move?(4,6)).to eq(true)
@@ -45,20 +46,18 @@ RSpec.describe Rook, type: :model do
     end
     context 'obstructed moves' do
       it 'returns false if piece is blocking up' do
+        game = create(:game)
         game.pieces.delete_all
         rook = Rook.create(color: 'WHITE', x_position: 0, y_position: 0, game: game)
         pawn = Pawn.create(color: 'WHITE', x_position: 0, y_position: 1, game: game)
-
-        game.pieces << rook
-        game.pieces << pawn
-
         expect(rook.valid_move?(0,4)).to eq(false)
       end
       it 'returns false if piece is blocking down' do
+        game = create(:game)
         game.pieces.delete_all
         rook = Rook.create(color: 'WHITE', x_position: 0, y_position: 7, game: game)
         pawn = Pawn.create(color: 'WHITE', x_position: 0, y_position: 5, game: game)
-
+        game.reload
         expect(rook.valid_move?(0,1)).to eq(false)
       end
     end
