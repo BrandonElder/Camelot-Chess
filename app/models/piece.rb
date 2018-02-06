@@ -1,4 +1,5 @@
-# Piece will hold all similar logic for all pieces.
+include PiecesHelper
+
 class Piece < ApplicationRecord
   after_initialize :set_default_state
   belongs_to :game
@@ -64,72 +65,15 @@ class Piece < ApplicationRecord
     return false if game.user_turn != color
     true
   end
-  
-  def not_into_check?(x,y)
-    !move_causes_check?(x,y)
-  end
 
   def within_chessboard?(x, y)
     (x >= 0 && y >= 0 && x <= 7 && y <= 7 && x != nil && y != nil)
   end
 
-  def horizontal_obstruction?(x_end, _y_end)
-    # movement: right to left
-    if x_position < x_end
-      (x_position + 1).upto(x_end - 1) do |x|
-        return true if space_occupied?(x, y_position)
-      end
-    # movement: left to right
-    elsif x_position > x_end
-      (x_position - 1).downto(x_end + 1) do |x|
-        return true if space_occupied?(x, y_position)
-      end
-    end
-    false
-  end
+  # IN CHECK METHODS
 
-  def vertical_obstruction(x_end, y_end)
-    # path is vertical down
-    if y_position < y_end
-      (y_position + 1).upto(y_end - 1) do |y|
-        return true if space_occupied?(x_position, y)
-      end
-    # path is vertical up
-    elsif y_position > y_end
-      (y_position - 1).downto( + 1) do |y|
-        return true if space_occupied?(x_position, y)
-      end
-    end
-    false
-  end
-
-  def diagonal_obstruction(x_end, y_end)
-    # path is diagonal and down
-    if x_position < x_end
-      (x_position + 1).upto(x_end - 1) do |x|
-        delta_y = x - x_position
-        y = y_end > y_position ? y_position + delta_y : y_position - delta_y
-        return true if space_occupied?(x, y)
-      end
-    # path is diagonal and up
-    elsif x_position > x_end
-      (x_position - 1).downto(x_end + 1) do |x|
-        delta_y = x_position - x
-        y = y_end > y_position ? y_position + delta_y : y_position - delta_y
-        return true if space_occupied?(x, y)
-      end
-    end
-    false
-  end
-
-  def is_obstructed?(x, y)
-    x = x
-    y = y
-    path = check_path(x_position, y_position, x, y)
-    return horizontal_obstruction?(x, y) if path == 'horizontal'
-    return vertical_obstruction(x, y) if path == 'vertical'
-    return diagonal_obstruction(x, y) if path == 'diagonal'
-    false
+  def not_into_check?(x,y)
+    !move_causes_check?(x,y)
   end
   
   def check_path(x_position, y_position, x, y)
@@ -179,7 +123,8 @@ class Piece < ApplicationRecord
   end
 
   def occupied_by_mycolor_piece?(x, y)
-    space_occupied?(x, y) && (piece_at(x, y).color == color)
+    piece = piece_at(x, y)
+    space_occupied?(x, y) && piece.color == color
   end
 
   def occupied_by_opposing_piece?(x, y)

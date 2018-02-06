@@ -1,8 +1,8 @@
 # Game will hold all Game Logic, gameboard etc.
 require 'pry'
 class Game < ApplicationRecord
-  belongs_to :white_user, class_name: 'User'
-  belongs_to :black_user, class_name: 'User', optional: true
+  belongs_to :white_user, class_name: 'User', required: false
+  belongs_to :black_user, class_name: 'User', required: false
   has_many :pieces
   validates :name, presence: true
   after_create :fill_board, :first_turn!
@@ -25,15 +25,13 @@ class Game < ApplicationRecord
   def in_check?(color)
     @enemies_causing_check = []
     king = find_king(color)
-
     if king
       opponents = opponents_pieces(color)
       opponents.each do |piece|
         @enemies_causing_check << piece if piece.valid_move?(king.x_position, king.y_position) == true
       end
     end
-
-    return @enemies_causing_check.any?
+    return true if @enemies_causing_check.any?
   end
 
   def stalemate?(color)
@@ -135,9 +133,9 @@ class Game < ApplicationRecord
   end
 
   def available?
-    if user_signed_in?
-     Game.where(black_user_id: nil) && Game.where(white_user_id != current_user).to_i
-   end
+    # if user_signed_in?
+      Game.where(black_user_id: nil) && Game.where(white_user_id: !nil)
+    # end
   end
 
   def black_pieces

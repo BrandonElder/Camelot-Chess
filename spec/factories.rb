@@ -1,30 +1,42 @@
 FactoryGirl.define do
-  factory :message do
-    
-  end
   
   factory :game do
-    association :white_user, factory: :user
+    name 'example game'
   end
 
   factory :game_white_player, class: Game do
     name 'example game'
-    white_player_id 1
+    white_user_id 1
+  end
+
+  factory :game_black_player, class: Game do
+    name 'example game'
+    black_user_id 1
+  end
+
+  factory :game_full, class: Game do
+    name 'example game'
+    black_user_id 1
+    white_user_id 2
   end
 
   factory :piece do
     association :game
     x_position 0
     y_position 0
-    color false
+    piece_type 'Rook'
+    color true
+    game_id 1
+    state'unmoved'
   end
 
   factory :user do
-    sequence :email do |n|
-      "randomEmail#{n}@gmail.com"
-    end
-    password "secretPassword"
-    password_confirmation "secretPassword"
+    email { Faker::Internet.unique.email }
+    password 'very_secure'
+    password_confirmation 'very_secure'
+    username { Faker::Internet.user_name }
+    created_at Regexp.last_match(2)
+    updated_at Regexp.last_match(3)
   end
 
   factory :king, parent: :piece do
