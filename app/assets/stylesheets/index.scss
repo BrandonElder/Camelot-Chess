@@ -1,4 +1,8 @@
-/* HOMEPAGE */
+/********************************* HOMEPAGE STYLES *************************************/
+
+/*=====================
+        FONTS
+=====================*/
 
 @keyframes fade-in {
   0% { opacity: -1 }
@@ -16,26 +20,80 @@
   }
 }
 
+
+/*======================
+        GLOBAL 
+ =====================*/
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
 }
 
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 90vh auto auto auto;
+  grid-template-areas: "hero"
+                      "about"
+                      "skills"
+                      "team";
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 160px 0;
+}
+
+.title {
+  font-size: 4rem;
+  margin: 0;
+}
+
+.subtitle {
+  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 1.3px;
+  margin-bottom: 20px;
+}
+
+.img-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  margin: 20px auto;
+}
+
+.img-box p {
+  text-align: center;
+  padding-top: 12px;
+  font-weight: 600;
+}
+
 /* HERO SECTION */
+
 .hero {
-  background: linear-gradient(to bottom, rgba(13, 175, 129, 0.1) 0%, rgba(13, 175, 129, 0.1) 100%), url('chess7.jpg') no-repeat center center fixed;
+  grid-area: hero;
+  margin: -70px 0 0;
+  align-items: center;
+  color: #fff;
+  line-height: 1.3;
+  background: linear-gradient(to bottom, rgba(13, 175, 129, 0.1) 0%, 
+    rgba(13, 175, 129, 0.1) 100%),
+    url(chess7.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover;
-  height: 100vh;
-  /*box-shadow: 0px 3px 8px #2a2a2a;*/
-  text-align: center;
-  margin-top: -70px;
-  line-height: 30px;
-
-  @media all and (max-width: 1300px) {
-    height: 50vh;
-  }
+  background-size: cover; 
 }
 
 .hero.active {
@@ -43,228 +101,106 @@ body {
   height: 100vh;
 }
 
-h1.hero-text {
-  color: #fff;
-  font-size: 6.5em;
-  font-weight: 200;
+.hero-header {
   margin: 0;
-  padding-top: 2em;
-  font-family: 'Montserrat', sans-serif;
-  line-height: 1.4;
+  padding-top: 70px;
+  font-size: 6.4rem;
+  font-weight: 200;
   letter-spacing: 1px;
   /*animation: fade-down 1.5s;*/
 }
 
-h4.hero-subtext {
-  color: #fff;
-  font-size: 1.5em;
-  font-weight: 200;
-  margin: 0;
-  letter-spacing: 1.5px;
-  /*animation: fade-down 1.5s;*/
-}
-
-.play {
-  padding-top: 1.6em;
-  animation: fade-in 3.5s;
-  padding-left: 0;
-}
-
 .arrows {
-  text-align: center;
-  height: 70%;
-}
-
-.arrow-div {
-  height: 10%;
-  width: auto;
-  margin: 100px auto 50px;
-}
-
-#main-container {
- 
+  padding-top: 50px;
 }
 
 /* ABOUT SECTION */
-.about-section {
-  display: flex;
-  justify-content: center;
+
+.about {
   align-items: center;
-  height: 94vh;
-  width: 100%;
-  margin: 0;
   color: black;
-  clear: both;
-  
-  @media all and (max-width: 1300px) {
-    height: 50vh;
-  }
 }
 
 .about-container {
-  text-align: center;
-  width: 40%;
+  width: 90%;
 }
 
 .about-header {
-  font-family: 'Montserrat', sans-serif;
   font-weight: 700;
-  font-size: 36px;
+  font-size: 4rem;
   margin: 0;
 }
 
 .about-subheader {
-  font-family: 'Montserrat', sans-serif;
   color: rgba(0, 0, 0, 0.6);
   font-weight: 600;
-  font-size: 30px;
-  margin: 0;
+  font-size: 2.2rem;
+  margin-bottom: 12px;
 }
 
 .about-text {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 20px;
+  font-size: 2.4rem;
 }
 
 /* SKILLS SECTION */
-.skills-section {
-  height: 800px;
-  background: darkslategray;
-  color: white;
-  width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  padding-top: 80px;
-}
-
-.skills-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.skills-title {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 44px;
-  font-weight: 400;
-  margin: 0;
-}
-
-.skills-subtitle {
-  font-family: 'Roboto', sans-serif;
-  font-weight: 100;
-  font-size: 16px;
-  margin: 0;
-}
-
-.skillbox {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 .skills {
-  display: block;
-  height: auto;
-  width: auto;
-  margin: 20px;
-  padding-top: 20px;
-}
-
-.skills h3 {
-  text-align: center;
-  padding-top: 10px;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
-}
-
-.skills-logos {
-  height: 90px;
-  width: 90px;
+  background-color: darkslategray;
+  color: #fff;
 }
 
 .skills-hr {
   width: 40%;
-  margin: 50px auto;
+  margin: 100px auto;
 }
 
-.team-text {
-  text-align: center;
+.skills-logos {
+  display: block;
+  width: 90px;
 }
-
 
 /* TEAM SECTION */
-.team-section {
-  height: 400px;
-  width: 100%;
-  margin: 70px auto;
-  text-align: center;
-  padding-top:  50px;
-}
-
-.team-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  margin: 0 auto;
-  padding-top: 20px;
-}
-
-.team-title {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 42px;
-  font-weight: 400;
-  margin: 0;
-}
-
-.team-subtitle {
-  font-family: 'Roboto', sans-serif;
-  font-weight: 100;
-  font-size: 16px;
-  margin: 0;
-}
-
-.teambox {
-  margin: 12px;
-}
-
-
-.teambox h3 {
-  text-align: center;
-  padding-top: 8px;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 400;
-}
 
 .team-logos {
-  height: 180px;
-  width: 180px;
+  height: 150px;
+  width: 150px;
   border: 2px solid #fff;
   border-radius: 100%;
+}
 
-  @media all and (max-width: 88em) {
-    height: 160px;
-    width: 160px;
+
+/*==========================
+        Media Queries
+===========================*/
+
+@media only screen and (min-device-width: 1200px){
+  .subtitle,
+  .subtitle {
+    font-size: 1.2rem;
   }
-
-  @media all and (max-width: 80em) {
-    height: 150px;
-    width: 150px;
+  .about-container {
+    width: 40%;
   }
-
-  @media all and (max-width: 76em) {
-    height: 140px;
-    width: 140px;
+  .img-container {
+    width: 75%;
   }
+}
 
-  @media all and (max-width: 72.5em) {
-    height: 120px;
-    width: 120px;
+@media only screen and (min-device-width: 990px) {
+  .subtitle,
+  .subtitle {
+    font-size: 1.2rem;
   }
+}
 
-  @media all and (max-width: 65em) {
-    height: 110px;
-    width: 110px;
+@media only screen and (min-device-width: 500px) {
+  .about-header {
+    font-size: 3rem;
+  }
+  .about-subheader {
+    font-size: 1.8rem;
+  }
+  .about-text {
+    font-size: 1.5rem;
   }
 }

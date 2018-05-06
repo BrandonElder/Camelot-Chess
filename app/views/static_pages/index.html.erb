@@ -1,134 +1,106 @@
+<div class="grid-container">
 <!-- HERO SECTION BEGIN -->
-<div class="hero">
-  <h1 class="hero-text">CAMELOT CHESS</h1>
-  <h4 class="hero-subtext">Online Chess built with Ruby On Rails</h4>
-  <!--<div class="buttons play">
-    <a class="play-btn"<%= link_to 'PLAY', games_path %>></a>
-  </div> -->
-  <div class="arrow-div">
-    <span id="arrows"><%= image_tag "arrow.png", class: "arrows" %></span>
-  </div>
-</div>
+<section class="hero section">
+  <p class="hero-header">CAMELOT CHESS</p>
+  <span id="arrows"><%= image_tag "arrow.png", class: "arrows" %></span>
+</section>
 <!--HERO SECTION END -->
 
-<div id="main-container">
 <!-- ABOUT SECTION BEGIN-->
-<section class="about-section">
+<section class="about section">
   <div class="about-container">
-    <h1 class="about-header">CAMELOT CHESS...</h1>
-    <h1 class="about-subheader">from THE KNIGHTS WHO SAY NIL</h1>
+    <p class="about-header">CAMELOT CHESS...</p>
+    <p class="about-subheader">from THE KNIGHTS WHO SAY NIL</p>
     <p class="about-text">The capstone of 
-<%= link_to "The Firehose Project", "https://www.thefirehoseproject.com" %>, Camelot Chess is an open source chess application built with Ruby on Rails. Our agile team, <%= link_to "The Knights Who Say Nil", "https://github.com/TheKnightsWhoSayNil" %>, worked together to build every element of our app from the ground up while improving our development skills.</p>
+<%= link_to "The Firehose Project", "https://www.thefirehoseproject.com" %>, Camelot Chess is an open source chess application built with Ruby on Rails. Our agile team, <%= link_to "The Knights Who Say Nil", "https://github.com/BrandonElder/Camelot-Chess" %>, worked together to build every element of our app from the ground up while improving our development skills.</p>
   </div>
 </section>
 <!--ABOUT SECTION END-->
 
 <!-- SKILLS & TOOLS SECTION BEGIN -->
-<section class="skills-section">
-  <h1 class="skills-title">< SKILLS ></h1>
-  <h1 class="skills-subtitle">Full Stack Development Skills Used To Craft Our Project</h1>
-  <div class="skills-container">
-    <div class="skillbox">
-      <div class="skills">
-        <%= image_tag "ruby.png", class: "skills-logos" %>
-        <h3>RUBY</h3>
-      </div>
+<section class="skills section">
+  <p class="title">SKILLS</p>
+  <p class="subtitle">Full Stack Development Skills To Craft Our Project</p>
+  <div class="img-container">
+    <div class="img-box">
+      <%= image_tag "ruby.png", class: "skills-logos" %>
+      <p>RUBY</p>
     </div>
-    <div class="skillbox"> 
-      <div class="skills">
-        <%= image_tag "rails.png", class: "skills-logos" %>
-        <h3>RAILS</h3>
-      </div>
+    <div class="img-box">
+      <%= image_tag "rails.png", class: "skills-logos" %>
+      <p>RAILS</p>
     </div>
-    <div class="skillbox">
-      <div class="skills">
-        <%= image_tag "js.png", class: "skills-logos" %>
-        <h3>JS</h3>
-      </div>
+    <div class="img-box">
+      <%= image_tag "js.png", class: "skills-logos" %>
+      <p>JS</p>
     </div>
-    <div class="skillbox">
-      <div class="skills">
-        <%= image_tag "html.png", class: "skills-logos" %>
-        <h3>HTML5</h3>
-      </div>
+    <div class="img-box">
+      <%= image_tag "html.png", class: "skills-logos" %>
+      <p>HTML5</p>
     </div>
-    <div class="skillbox">
-      <div class="skills">
-        <%= image_tag "css.png", class: "skills-logos" %>
-        <h3>CSS3</h3>
-      </div>
+    <div class="img-box">
+      <%= image_tag "css.png", class: "skills-logos" %>
+      <p>CSS3</p>
     </div>
   </div>
 
   <hr class="skills-hr">
 
-  <h1 class="skills-title">< TOOLKIT ></h1>
-  <h1 class="skills-subtitle">Management, Communication, Testing, Integration and Control</h1>
-  <div class="skills-container">
-    <div class="skillbox">
-      <div class="skills">
-        <%= image_tag "codeship.png", class: "skills-logos" %>
-        <h3>CODESHIP</h3>
-      </div>
+  <p class="title">TOOLKIT</p>
+  <p class="subtitle">Management, Communication, Testing &amp; Integration</p>
+  <div class="img-container">
+    <div class="img-box">
+      <%= image_tag "codeship.png", class: "skills-logos" %>
+      <p>CODESHIP</p>
     </div>
-    <div class="skillbox">
-      <div class="skills">
-        <%= image_tag "rubocop.png", class: "skills-logos" %>
-        <h3>RUBOCOP</h3>
-      </div>
+    <div class="img-box">
+      <%= image_tag "rubocop.png", class: "skills-logos" %>
+      <p>RUBOCOP</p>
     </div>
-    <div class="skillbox">
-      <div class="skills">
-        <%= image_tag "github.png", class: "skills-logos" %>
-        <h3>GITHUB</h3>
-      </div>
+    <div class="img-box">
+      <%= image_tag "github.png", class: "skills-logos" %>
+      <p>GITHUB</p>
     </div>
-    <div class="skillbox">
-      <div class="skills">
-        <%= image_tag "rspec.png", class: "skills-logos" %>
-        <h3>RSPEC</h3>
-      </div>      
+    <div class="img-box">
+      <%= image_tag "rspec.png", class: "skills-logos" %>
+      <p>RSPEC</p>
+    </div>      
+    <div class="img-box">
+      <%= image_tag "trello.png", class: "skills-logos" %>
+      <p>TRELLO</p>
     </div>
-    <div class="skillbox">
-      <div class="skills">
-        <%= image_tag "trello.png", class: "skills-logos" %>
-        <h3>TRELLO</h3>
-      </div>
-    </div>
-    <div class="skillbox">
-      <div class="skills">
-        <%= image_tag "slack.png", class: "skills-logos" %>
-        <h3>SLACK</h3>
-      </div>
+    <div class="img-box">
+      <%= image_tag "slack.png", class: "skills-logos" %>
+      <p>SLACK</p>
     </div>
   </div>
 </section>
 <!-- SKILLS & TOOLS SECTION END -->
 
 <!-- TEAM SECTION BEGIN -->
-<section class="team-section">
-  <h1 class="team-title">< OUR TEAM ></h1>
-  <h1 class="team-subtitle">The Knights Who Say Nil</h1>
-  <div class="team-container">
-    <div class="teambox">
+<section class="team section">
+  <p class="title">OUR TEAM</p>
+  <p class="subtitle">The Knights Who Say Nil</p>
+  <div class="img-container">
+    <div class="img-box">
       <%= image_tag "bran.png", class: "team-logos" %>
-      <h3>Brandon</h3>
+      <p>Brandon</p>
     </div>
-    <div class="teambox">
+    <div class="img-box">
       <%= image_tag "con.png", class: "team-logos" %>
-      <h3>Conner</h3>
+      <p>Conner</p>
     </div>
-    <div class="teambox">
+    <div class="img-box">
       <%= image_tag "tim.png", class: "team-logos" %>
-      <h3>Timothy</h3>
+      <p>Timothy</p>
     </div>
-    <div class="teambox">
+    <div class="img-box">
       <%= image_tag "kat.png", class: "team-logos" %>
-      <h3>Katie</h3>
+      <p>Katie</p>
     </div>
-    <div class="teambox">
+    <div class="img-box">
       <%= image_tag "lad.png", class: "team-logos" %>
-      <h3>Ladislav</h3>
+      <p>Ladislav</p>
     </div>
   </div>
 </section>
